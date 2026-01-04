@@ -1,0 +1,1 @@
+/Users/wangyukun/Desktop/develop/rust/RustLearningNotes/Rust-application/hello_world/target/debug/hello_world: /Users/wangyukun/Desktop/develop/rust/RustLearningNotes/Rust-application/hello_world/src/main.rs
