@@ -1,0 +1,1 @@
+/Users/wangyukun/Desktop/develop/rust/RustLearningNotes/Rust-application/functions/target/debug/functions: /Users/wangyukun/Desktop/develop/rust/RustLearningNotes/Rust-application/functions/src/main.rs
