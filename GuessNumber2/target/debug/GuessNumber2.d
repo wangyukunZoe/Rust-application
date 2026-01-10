@@ -1,1 +1,0 @@
-/Users/wangyukun/Desktop/develop/rust/RustLearningNotes/Rust-application/GuessNumber2/target/debug/GuessNumber2: /Users/wangyukun/Desktop/develop/rust/RustLearningNotes/Rust-application/GuessNumber2/src/main.rs
