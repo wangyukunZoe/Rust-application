@@ -1,31 +1,22 @@
 // cargo run xxxx xxxx.txt
 
 // use std::env::args();     //args()返回一个迭代器 collect
+use minigrep::Config;
 use std::env;
-use std::fs;
+use std::process;
 
 fn main() {
     let args: Vec<String> = env::args().collect(); //对参数产生一个集合使用 vector
-    let config = Config::new(&args);
-    //读取文件
-    let contents =
-        fs::read_to_string(config.filename).expect("Something went wrong reading the file.");
+    let config = Config::new(&args).unwrap_or_else(|err| {
+        //声明一个闭包，可以简单理解为一个匿名函数
+        println!("Problem parsing arguments: {}", err);
+        process::exit(1); //程序退出的状态码
+    });
 
-    println!("With text:\n{}", contents);
-}
-
-struct Config {
-    query: String,
-    filename: String,
-}
-
-impl Config {
-    fn new(args: &[String]) -> Config {
-        let query = args[1].clone();
-        let filename = args[2].clone();
-
-        Config { query, filename }
-    }
+    if let Err(e) = minigrep::run(config) {
+        println!("Application error: {}", e);
+        process::exit(1);
+    };
 }
 
 // fn parse_config(args: &[String]) -> Config {
