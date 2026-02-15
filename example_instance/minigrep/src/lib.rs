@@ -10,8 +10,10 @@ pub struct Config {
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     //读取文件
     let contents = fs::read_to_string(config.filename)?;
-
-    println!("With text:\n{}", contents);
+    for line in search(&config.query, &contents) {
+        println!("{}", line);
+    }
+    // println!("With text:\n{}", contents);
     Ok(())
 }
 
@@ -24,5 +26,36 @@ impl Config {
         let filename = args[2].clone();
 
         Ok(Config { query, filename })
+    }
+}
+
+//这里用生命周期是因为2个参数的生命时常不一样！第一个query，查询结束后就释放了，但是第二个不能，因为还要//返回结果给用户
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+
+    results
+}
+
+#[cfg(test)]
+mod test {
+    use std::vec;
+
+    use super::*;
+
+    #[test]
+    fn one_result() {
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.";
+
+        assert_eq!(vec!["safe, fast, productive."], search(query, contents))
     }
 }
