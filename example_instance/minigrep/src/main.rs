@@ -6,8 +6,8 @@ use std::env;
 use std::process;
 
 fn main() {
-    let args: Vec<String> = env::args().collect(); //对参数产生一个集合使用 vector
-    let config = Config::new(&args).unwrap_or_else(|err| {
+    //let args: Vec<String> = env::args().collect(); //对参数产生一个集合使用 vector
+    let config = Config::new(env::args()).unwrap_or_else(|err| {
         //声明一个闭包，可以简单理解为一个匿名函数
         // println!("Problem parsing arguments: {}", err);
         eprintln!("Problem parsing arguments: {}", err);

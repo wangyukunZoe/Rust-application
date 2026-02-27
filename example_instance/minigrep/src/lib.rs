@@ -27,13 +27,28 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+//迭代器一定要加mut,迭代的过程中会修改自身的状态
+
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &'static str> {
+    pub fn new(mut args: std::env::Args) -> Result<Config, &'static str> {
+        // pub fn new(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
             return Err("Not enough arguments");
         }
-        let query = args[1].clone();
-        let filename = args[2].clone();
+        args.next();
+
+        let query = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a query string"),
+        };
+        let filename = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a file name"),
+        };
+        //clone 会引发性能损耗，可以使用闭包
+        // let query = args[1].clone();
+        // let filename = args[2].clone();
+
         let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
 
         Ok(Config {
@@ -46,15 +61,20 @@ impl Config {
 
 //这里用生命周期是因为2个参数的生命时常不一样！第一个query，查询结束后就释放了，但是第二个不能，因为还要//返回结果给用户
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let mut results = Vec::new();
+    // let mut results = Vec::new();
 
-    for line in contents.lines() {
-        if line.contains(query) {
-            results.push(line);
-        }
-    }
+    // for line in contents.lines() {
+    //     if line.contains(query) {
+    //         results.push(line);
+    //     }
+    // }
 
-    results
+    // results
+
+    contents
+        .lines()
+        .filter(|line| line.contains(query))
+        .collect()
 }
 
 pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
@@ -70,6 +90,7 @@ pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a st
 
     results
     // TEST quota :// vec![]
+    //.filter(|line| line.to_lowercase().contains(&query.to_lowercase())).collect()
 }
 
 #[cfg(test)]
