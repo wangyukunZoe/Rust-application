@@ -1,0 +1,13 @@
+[package]
+name = "closure_example"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[profile.dev]
+opt-level = 1
+
+# 编译🧬优化级别
+[profile.release]
+opt-level = 3
