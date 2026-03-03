@@ -1,6 +1,11 @@
 [package]
-name = "minigrep"
+name = "minigreprust"
 version = "0.1.0"
 edition = "2024"
+description = "this is a minigrep written in rust"
+license = "MIT"
 
 [dependencies]
+
+[profile.release]
+opt-level = 3

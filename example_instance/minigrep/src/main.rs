@@ -1,7 +1,7 @@
 // cargo run xxxx xxxx.txt
 
 // use std::env::args();     //args()返回一个迭代器 collect
-use minigrep::Config;
+use minigreprust::Config;
 use std::env;
 use std::process;
 
@@ -14,7 +14,7 @@ fn main() {
         process::exit(1); //程序退出的状态码
     });
 
-    if let Err(e) = minigrep::run(config) {
+    if let Err(e) = minigreprust::run(config) {
         eprintln!("Application error: {}", e);
         process::exit(1);
     };
