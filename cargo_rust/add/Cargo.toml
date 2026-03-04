@@ -1,0 +1,28 @@
+# 用于配置工作空间
+[workspace]
+
+members = [
+    "adder","add-one", "add-two",
+]
+
+# ### All command
+# mkdir add
+#  4402  cd add/
+#  4403  touch Cargo.toml
+#  4404  code .
+#  4405  cargo new adder
+#  4406  cargo build
+#  4407  cd adder/
+#  4408  cargo build
+#  4409  cargo new add-one --lib
+#  4410  cd ../
+#  4411  cargo build
+#  4412  cargo run
+#  4413  cargo build
+#  4414  clear
+#  4415  cargo new add-two --lib
+#  4416  cargo build
+#  4417  clear
+#  4418  cargo test
+#  4419  clear
+#  4420  cargo test -p add-one
